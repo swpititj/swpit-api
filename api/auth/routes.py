@@ -4,8 +4,8 @@ from json import dumps
 from flask import Blueprint, jsonify, make_response, request
 from api.auth.validation import password_validation
 from api.data.db import db
-from api.models.Usuario import Usuario
-from api.schemas.Schemas import usuario_schema
+from api.models.Usuarios import Usuarios
+from api.schemas.Schemas import UsuarioSchema
 from flask_jwt_extended import jwt_required,get_jwt_identity, create_access_token
 
 
@@ -30,6 +30,7 @@ def login():
 @auth_bp.route('/check')
 @jwt_required()
 def check():
+    usuario_schema = UsuarioSchema()
     user_id = get_jwt_identity()
     usuario = Usuario.query.filter_by(idusuario=user_id).first()
     return jsonify(usuario_schema.dump(usuario))

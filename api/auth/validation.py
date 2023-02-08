@@ -1,13 +1,13 @@
 import datetime
 import bcrypt
-from api.models.Usuario import Usuario
+from api.models.Usuarios import Usuarios
 from api.auth.jwt import jwt
 from flask_jwt_extended import create_access_token
 
 
 def password_validation(username, password):
     try:
-        usuario = Usuario.query.filter_by(Nombre=username).first()
+        usuario = Usuarios.query.filter_by(Nombre=username).first()
         if usuario == None:
             return 0
         if(bcrypt.checkpw(password.encode('utf-8'), usuario.Clave.encode('utf-8'))):

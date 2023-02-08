@@ -1,4 +1,5 @@
 from sqlalchemy import Integer,Column,String,Boolean,ForeignKey,CHAR,Date
+from sqlalchemy.orm import relationship
 from api.data.db import db
 
 class Encuestas(db.Model):
@@ -9,3 +10,5 @@ class Encuestas(db.Model):
     Instrucciones = Column(String(1000), unique=False, nullable=False)
     Observaciones = Column(String(500), unique=False, nullable=True)
     EstadoEncuesta = Column(Integer, unique=False, nullable=False)
+
+    Secciones = relationship("Seccion", backref="Encuesta")

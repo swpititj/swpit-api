@@ -5,11 +5,10 @@ from api.models.Encuestas import Encuestas
 from api.models.Seccion import Seccion
 from api.models.Preguntas import Preguntas
 from api.models.Tipos import Tipos
-from api.models.ResultadosHE import ResultadosHE
-from api.models.ResultadosTA import ResultadosTA
 from api.controllers.encuestas.utils.setters import set_ResultadosHE, set_ResultadosTA, set_ResultadosCA
 from api.controllers.encuestas.utils.getters import get_ResultadosHE, get_ResultadosTA, get_ResultadosCA
 from flask_jwt_extended import jwt_required
+from api.schemas.Schemas import EncuestasSchema
 
 encuesta_bp = Blueprint('encuesta_bp', __name__,static_folder='static', template_folder='templates')
 
@@ -33,27 +32,15 @@ def get_resultado(current_user, id):
 @encuesta_bp.route('/<id>')
 @jwt_required()
 def get_encuesta(id):
+    encuesta_schemas = EncuestasSchema()
     res = {}
     encuesta = Encuestas.query.filter_by(idEncuesta=id).first()
-    res["id"] = encuesta.idEncuesta
-    res["titulo"] = encuesta.Nombre
-    res["descripcion"] = encuesta.Descripcion
     secciones = Seccion.query.filter_by(idEncuesta=id).all()
-    res["secciones"] = []
     for seccion in secciones:
-        res_seccion = {}
-        res_seccion["id"] = seccion.idSeccion
-        res_seccion["titulo"] = seccion.Titulo
-        res_seccion["instrucciones"] = seccion.Instrucciones
         preguntas = Preguntas.query.filter_by(idSeccion=seccion.idSeccion).all()
-        res_seccion["preguntas"] = []
         for pregunta in preguntas:
-            res_preguntas = {}
-            res_preguntas["numero"] = pregunta.NumeroPregunta
-            res_preguntas["titulo"] = pregunta.TituloPregunta
-            res_seccion["preguntas"].append(res_preguntas)
-        res["secciones"].append(res_seccion)
-    return json.dumps(res)
+            pass
+    return encuesta
 
 @encuesta_bp.route('/')
 @jwt_required()

@@ -1,6 +1,5 @@
 from api.data.db import db
 from flask import Blueprint, render_template, request, redirect, make_response,jsonify
-from api.models.ResultadosHE import ResultadosHE
 from api.models.ResultadosTA import ResultadosTA
 from api.models.ResultadosCA import ResultadosCA
 
