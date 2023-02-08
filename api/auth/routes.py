@@ -32,7 +32,7 @@ def login():
 def check():
     usuario_schema = UsuarioSchema()
     user_id = get_jwt_identity()
-    usuario = Usuario.query.filter_by(idusuario=user_id).first()
+    usuario = Usuarios.query.filter_by(idusuario=user_id).first()
     return jsonify(usuario_schema.dump(usuario))
 
 #@auth_bp.post('/create')

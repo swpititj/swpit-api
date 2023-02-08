@@ -10,4 +10,4 @@ class Seccion(db.Model):
 
     idEncuesta = Column(Integer, ForeignKey('encuestas.idEncuesta'))
 
-    Preguntas = relationship("Preguntas", backref="Seccion")
+    Preguntas = relationship("Preguntas")

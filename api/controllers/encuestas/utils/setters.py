@@ -1,8 +1,6 @@
 from api.data.db import db
 from flask import Blueprint, render_template, request, redirect, make_response,jsonify
-from api.models.ResultadosTA import ResultadosTA
-from api.models.ResultadosCA import ResultadosCA
-
+'''
 def set_ResultadosHE(respuestas, id_user):
     nuevoresultado = ResultadosHE()
     calificacion1 = sum([int(string) for string in respuestas[0]])
@@ -121,3 +119,4 @@ def califinal(total):
         return "Bajo"
     else:
         return "Muy bajo"
+        '''

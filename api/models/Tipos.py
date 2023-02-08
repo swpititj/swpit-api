@@ -6,5 +6,4 @@ class Tipos(db.Model):
     idTipoPregunta = Column(Integer, primary_key=True)
     Nombre = Column(String(50), unique=False, nullable=False),
     Opcion = Column(Integer, unique=False, nullable= False)
-
-    DetTipoPregunta = relationship("DetTiposPreg", backref="Tipo")
+    DetTipoPreg = relationship('DetTiposPreg')

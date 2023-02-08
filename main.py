@@ -5,7 +5,7 @@ from flask_cors import CORS
 from api.data.db import db
 from api.schemas.ma import ma
 from api.auth.routes import auth_bp
-#from api.controllers.encuestas.routes import encuesta_bp
+from api.controllers.encuestas.routes import encuesta_bp
 from api.auth.jwt import jwt
 
 app = Flask(__name__)
@@ -25,7 +25,7 @@ jwt.init_app(app)
 
 #Blueprints
 app.register_blueprint(auth_bp, url_prefix="/auth")
-#app.register_blueprint(encuesta_bp, url_prefix="/encuesta")
+app.register_blueprint(encuesta_bp, url_prefix="/encuesta")
 
 #ERROR HANDLER
 @app.errorhandler(404)

@@ -1,4 +1,4 @@
-from api.data.db import db
+'''from api.data.db import db
 from flask import Blueprint, render_template, request, redirect, make_response,jsonify
 from api.models.ResultadosHE import ResultadosHE
 from api.models.ResultadosTA import ResultadosTA
@@ -50,4 +50,4 @@ def get_ResultadosCA(id):
         res["resultado"] = resultado.resultado
         return make_response(jsonify(res))
     else:
-        return make_response(jsonify({'res': 'encuesta no existe'}), 404)
+        return make_response(jsonify({'res': 'encuesta no existe'}), 404)'''

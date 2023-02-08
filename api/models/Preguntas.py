@@ -11,3 +11,4 @@ class Preguntas(db.Model):
     idSeccion = Column(Integer, ForeignKey('seccion.idSeccion'))
 
     idTipoPregunta = Column(Integer, ForeignKey('tipos.idTipoPregunta'))
+    TipoPregunta = relationship('Tipos')

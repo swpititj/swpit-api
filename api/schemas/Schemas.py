@@ -5,6 +5,7 @@ from api.models.Seccion import Seccion
 from api.models.Tipos import Tipos
 from api.schemas.ma import ma
 from api.models.Usuarios import Usuarios
+from marshmallow import fields
 '''from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.UsuPadres import UsuPadres
 from api.models.Estudiantes import Estudiantes
@@ -32,24 +33,28 @@ class EncuestasSchema(ma.SQLAlchemyAutoSchema):
         model = Encuestas
 
 
-class EncuestasSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Encuestas
 
+class TiposSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Tipos
+    #DetTipoPreg = fields.Nested(DetTiposPregSchema, many=True)
 
 class PreguntasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Preguntas
-
+    #TipoPregunta = fields.Nested(TiposSchema,)
 
 class SeccionSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Seccion
         include_fk = True
+    Preguntas = fields.Nested(PreguntasSchema,many=True)
 
-class TiposSchema(ma.SQLAlchemyAutoSchema):
+class EncuestasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Tipos
+        model = Encuestas
+
+    Secciones = fields.Nested(SeccionSchema,many=True)
 
 '''class UsuPadresSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
