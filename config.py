@@ -6,6 +6,7 @@ class Config:
     TEMPLATES_FOLDER = 'templates'
     SQL_CLOUD_PASSWORD = os.environ.get('SQL_CLOUD_PASSWORD')
     SQL_LOCAL_PASSWORD = os.environ.get('SQL_LOCAL_PASSWORD')
+    JSON_SORT_KEYS=False 
 
 class ProdConfig(Config):
     FLASK_ENV = 'production'

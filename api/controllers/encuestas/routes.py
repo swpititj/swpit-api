@@ -11,7 +11,7 @@ from api.schemas.Schemas import EncuestasSchema
 from flask_jwt_extended import jwt_required
 from api.schemas.Schemas import EncuestasSchema
 
-encuesta_bp = Blueprint('encuesta_bp', __name__,static_folder='static', template_folder='templates')
+encuesta_bp = Blueprint('encuesta_bp', __name__)
 '''
 @encuesta_bp.post('/resultados')
 @jwt_required()
@@ -29,26 +29,21 @@ def get_resultado(current_user, id):
     elif(id == 2): return get_ResultadosTA(current_user.idusuario)
     elif(id == 3): return get_ResultadosCA(current_user.idusuario)
     else: return make_response(jsonify({'res': 'error'}), 404)
-
+'''
 @encuesta_bp.route('/<id>')
-@jwt_required()
+#@jwt_required()
 def get_encuesta(id):
     encuesta_schemas = EncuestasSchema()
-    res = {}
     encuesta = Encuestas.query.filter_by(idEncuesta=id).first()
-    secciones = Seccion.query.filter_by(idEncuesta=id).all()
-    for seccion in secciones:
-        preguntas = Preguntas.query.filter_by(idSeccion=seccion.idSeccion).all()
-        for pregunta in preguntas:
-            pass
-    return encuesta'''
+    encuesta = encuesta_schemas.dump(encuesta)
+    return jsonify(encuesta)
 
 @encuesta_bp.route('/')
 #@jwt_required()
 def get_encuestas():
     encuestas_schema = EncuestasSchema(many=True)
     res = []
-    encuestas_db = Encuestas.query.all()
-    encuestas = encuestas_schema.dump(encuestas_db)
+    encuestas = Encuestas.query.all()
+    encuestas = encuestas_schema.dump(encuestas)
     return jsonify(encuestas)
 
