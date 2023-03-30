@@ -4,12 +4,23 @@ from json import dumps
 from flask import Blueprint, jsonify, make_response, request
 from api.auth.validation import password_validation
 from api.data.db import db
+from api.auth.jwt import jwt
 from api.models.Usuarios import Usuarios
 from api.schemas.Schemas import UsuarioSchema
-from flask_jwt_extended import jwt_required,get_jwt_identity, create_access_token
+from flask_jwt_extended import jwt_required, create_access_token, set_access_cookies,unset_jwt_cookies, current_user, get_csrf_token, get_jwt
 
 
 auth_bp = Blueprint('auth_bp', __name__)
+
+@jwt.user_identity_loader
+def user_identity_lookup(usuario):
+    return usuario["idusuario"]
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    user = Usuarios.query.filter_by(idusuario=identity).one_or_none()
+    return UsuarioSchema().dump(user)
 
 @auth_bp.post('/login')
 def login():
@@ -18,22 +29,34 @@ def login():
     password = auth.get('password')
 
     if not username:
-        response_object = {"messages": 'username is missing'}
-        return make_response(jsonify(response_object), 400)
+        return jsonify('username is missing'), 400 
 
-    user_id = password_validation(username, password)
+    user = password_validation(username, password)
+    if user == 0: return jsonify("Wrong username or password"),401
+   
+    UserSchema = UsuarioSchema()
+    user = UserSchema.dump(user)
 
-    if user_id == 0: return make_response(jsonify({}), 400)
-    token = create_access_token(identity=user_id, expires_delta=datetime.timedelta(minutes=10))
-    return make_response(jsonify({"token": token, "user":user_id}))
+    token = create_access_token(identity=user)
 
-@auth_bp.route('/check')
+    user['csrf'] = get_csrf_token(token)
+    
+    response = make_response(jsonify(user))
+    set_access_cookies(response, token)
+    return response
+
+@auth_bp.post('/logout')
+def logout():
+    response = jsonify("logout successful")
+    unset_jwt_cookies(response)
+    return response
+
+@auth_bp.get('/check')
 @jwt_required()
 def check():
-    usuario_schema = UsuarioSchema()
-    user_id = get_jwt_identity()
-    usuario = Usuarios.query.filter_by(idusuario=user_id).first()
-    return jsonify(usuario_schema.dump(usuario))
+    jwt = get_jwt()
+    current_user['csrf'] = jwt['csrf']
+    return jsonify(current_user)
 
 #@auth_bp.post('/create')
 #@jwt_required()

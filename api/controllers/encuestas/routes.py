@@ -5,23 +5,23 @@ from api.models.Encuestas import Encuestas
 from api.models.Seccion import Seccion
 from api.models.Preguntas import Preguntas
 from api.models.Tipos import Tipos
-from api.schemas.Schemas import EncuestasSchema
-#from api.controllers.encuestas.utils.setters import set_ResultadosHE, set_ResultadosTA, set_ResultadosCA
+#from api.schemas.Schemas import set_ResultadosHE, set_ResultadosTA, set_ResultadosCA
 #from api.controllers.encuestas.utils.getters import get_ResultadosHE, get_ResultadosTA, get_ResultadosCA
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_current_user,current_user
 from api.schemas.Schemas import EncuestasSchema
 
 encuesta_bp = Blueprint('encuesta_bp', __name__)
-'''
+
 @encuesta_bp.post('/resultados')
 @jwt_required()
-def resultadosta_post(current_user):
+def resultadosta_post():
     data = json.loads(request.data)
-    if(data['id_encuesta'] == 1): return set_ResultadosHE(data['respuestas'], current_user.idusuario)
-    elif(data['id_encuesta'] == 2): return set_ResultadosTA(data['respuestas'], current_user.idusuario)
-    elif(data['id_encuesta'] == 3): return set_ResultadosCA(data['respuestas'], current_user.idusuario)
+    resultado = ""
+    if(data['id_encuesta'] == 1): resultado = set_ResultadosHE(data['respuestas'])
+    elif(data['id_encuesta'] == 2): resultado = set_ResultadosTA(data['respuestas'])
+    elif(data['id_encuesta'] == 3): resultado = set_ResultadosCA(data['respuestas'])
     else: return make_response(jsonify({'res': 'error'}), 404)
-
+'''
 @encuesta_bp.get('/resultados/<int:id>')
 @jwt_required()
 def get_resultado(current_user, id):

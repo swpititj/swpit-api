@@ -3,5 +3,6 @@ bcrypt-example.py
 env.py
 # Dockerfile
 venv
+env
 .vscode
 # .dockerignore

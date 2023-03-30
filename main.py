@@ -9,7 +9,9 @@ from api.controllers.encuestas.routes import encuesta_bp
 from api.auth.jwt import jwt
 
 app = Flask(__name__)
-CORS(app)
+#CORS
+CORS(app,supports_credentials=True)
+#CORS(app)
 
 #Configuration
 app.config.from_object(config.DevConfig)
@@ -33,5 +35,5 @@ def not_found(error):
     return error
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
