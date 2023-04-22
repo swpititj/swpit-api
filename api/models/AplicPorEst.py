@@ -9,7 +9,7 @@ class AplicPorEst(db.Model):
     HoraInicial = Column(Time, unique=False, nullable=False)
     HoraFinal = Column(Time, unique=False, nullable=False)
 
-    idEstudiante = Column(Integer, ForeignKey('estudiantes.idEstudiantes'))
+    idEstudiante = Column(Integer, ForeignKey('estudiantes.idEstudiante'))
     idAplicacion = Column(Integer,ForeignKey('aplicaciones.idAplicacion'))
     estudiante = db.relationship("Estudiantes", backref='aplicporest', order_by=idAplocPorEst)
     aplicacion = db.relationship("Aplicaciones", backref='aplicporest', order_by=idAplocPorEst)

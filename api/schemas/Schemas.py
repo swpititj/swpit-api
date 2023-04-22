@@ -6,9 +6,10 @@ from api.models.Tipos import Tipos
 from api.schemas.ma import ma
 from api.models.Usuarios import Usuarios
 from marshmallow import fields
-'''from api.models.UsuEstudiantes import UsuEstudiantes
-from api.models.UsuPadres import UsuPadres
+from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.Estudiantes import Estudiantes
+'''
+from api.models.UsuPadres import UsuPadres
 from api.models.PadresEstudiantes import PadresEstudiantes
 from api.models.PadresFamilia import PadresFamilia
 from api.models.Personal import Personal'''
@@ -17,21 +18,25 @@ from api.models.Personal import Personal'''
 class UsuarioSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Usuarios
-
     idusuario = ma.auto_field()
     Nombre = ma.auto_field()
     Correo = ma.auto_field()
     #Clave = ma.auto_field()
     #Activo = ma.auto_field()
+    UsuEstudiantes
+
+class UsuEstudiantesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = UsuEstudiantes
+
+class EstudiantesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Estudiantes 
+
 
 class DetTiposPregSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = DetTiposPreg
-
-class EncuestasSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Encuestas
-
 
 
 class TiposSchema(ma.SQLAlchemyAutoSchema):
@@ -53,16 +58,16 @@ class SeccionSchema(ma.SQLAlchemyAutoSchema):
 class EncuestasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Encuestas
-
     Secciones = fields.Nested(SeccionSchema,many=True)
 
-'''class UsuPadresSchema(ma.SQLAlchemyAutoSchema):
+'''
+class EncuestasSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Encuestas
+
+class UsuPadresSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = UsuPadres
-
-class UsuEstudiantesSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = UsuEstudiantes
 
 class ResultadosCASchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -88,6 +93,4 @@ class PersonalSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Personal
 
-class EstudiantesSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Estudiantes '''
+        '''
