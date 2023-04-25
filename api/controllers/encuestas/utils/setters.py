@@ -124,6 +124,8 @@ def set_autoestima(res):
         else: cont4 +=1
 
 
+#rGreger
+
 
 if __name__ == "__main__":
     set_autoestima([0,3,2,1,0,3,2,3,1,3])
