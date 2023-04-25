@@ -1,4 +1,4 @@
-from api.data.db import db
+#from api.data.db import db
 
 def set_ResultadosHE(respuestas):
     #nuevoresultado = ResultadosHE()
@@ -97,3 +97,34 @@ def califinal(total):
         return "Bajo"
     else:
         return "Muy bajo"
+    
+
+def set_autoestima(res):
+    cont1=0
+    cont2=0
+    cont3=0
+    cont4=0
+
+    m1 = "Tienes un nivel algo bajo de autoestima y se nota en la valoracion que haces de ti mismo, de tu trabajo y de tu fortuna en la vida."
+    m2 = "Tu nivel de autoestima es sificiente pero mas a menudo de lo que te gustaria, te falla y te abandona."
+    m3 = "Tu nivel de autoestima es muy bueno, sabes darle el valor a las cosas que merecen, reconoces lo bueno y no te dejas amilanar facilmente por las adversidades."
+    m4 = "Tienes un alto nivel de autoestima y mucha confianza y seguridad en ti mismo. Ambos sentimientos con muy positivos y necesarios para conseguir mucho mas de lo que nos proponemos."
+    matriz = [
+        #    1 2 3 4 5 6 7 8 9 10
+            [4,3,2,1,4,3,2,1,4,3], #a
+            [2,1,4,3,2,1,4,3,2,1], #b
+            [1,4,3,2,1,4,3,2,1,4], #c
+            [3,1,1,4,3,2,1,4,3,2]  #d
+              ]
+    for i in range(len(res)):
+        respuesta = matriz[res[i]][i]
+        if respuesta == 1: cont1 +=1
+        elif respuesta == 2: cont2 +=1
+        elif respuesta == 3: cont3 +=1
+        else: cont4 +=1
+
+
+
+if __name__ == "__main__":
+    set_autoestima([0,3,2,1,0,3,2,3,1,3])
+
