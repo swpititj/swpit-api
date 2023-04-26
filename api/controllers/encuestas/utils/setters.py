@@ -1,15 +1,13 @@
 from api.data.db import db
 
-def set_ResultadosHE(respuestas):
+def set_HabilidadesEstudio(respuestas):
     #nuevoresultado = ResultadosHE()
     calificacion1 = sum([int(string) for string in respuestas[0]])
     calificacion2 = sum([int(string) for string in respuestas[1]])
     calificacion3 = sum([int(string) for string in respuestas[2]])
 
     calificacionfinal = calificacion3+calificacion2+calificacion1
-    resultadoseccion1 = caliseccion(calificacion1)
-    resultadoseccion2 = caliseccion(calificacion2)
-    resultadoseccion3 = caliseccion(calificacion3)
+    
     resultadofinal = califinal(calificacionfinal)
 
     '''resultado = ResultadosHE.query.filter_by(idUsuario=id_user).first()
@@ -25,7 +23,7 @@ def set_ResultadosHE(respuestas):
 
     return resultadofinal
 
-def set_ResultadosTA(respuestas):
+def set_TestAsertividad(respuestas):
     cantidad1 = len([int(i) for i in respuestas[0] if int(i) == 1 ])
     cantidad2 = len([int(i) for i in respuestas[0] if int(i) == 2 ])
     cantidad3 = len([int(i) for i in respuestas[0] if int(i) == 3 ])
@@ -40,7 +38,7 @@ def set_ResultadosTA(respuestas):
 
     return resultado
 
-def set_ResultadosCA(respuestas, id_user):
+def set_CanalesAprendizaje(respuestas, id_user):
     respuestas  = [int(i) for i in respuestas[0]]
     visual = respuestas[0]+respuestas[2]+respuestas[5]+respuestas[8]+respuestas[9]+respuestas[10]+respuestas[13]
     auditivo = respuestas[1]+respuestas[4]+respuestas[11]+respuestas[14]+respuestas[16]+respuestas[20]+respuestas[22]
@@ -56,27 +54,6 @@ def set_ResultadosCA(respuestas, id_user):
     elif(auditivo == kinestesico): resultado = "Auditiva Kinestesica"
 
     return resultado
-
-
-def caliseccion(total):
-    if total >= 20:
-        return "Muy alto"
-    elif total >= 19:
-        return "Alto"
-    elif total >= 18:
-        return "Por encima del promedio"
-    elif total >= 16:
-        return "Promedio alto"
-    elif total >= 14:
-        return "Promedio"
-    elif total >= 12:
-        return "Promedio bajo"
-    elif total >= 11:
-        return "Por debajo del promedio"
-    elif total >= 10:
-        return "Bajo"
-    else:
-        return "Muy bajo"
 
 def califinal(total):
     if total >= 57:

@@ -8,6 +8,8 @@ from api.models.Usuarios import Usuarios
 from marshmallow import fields
 from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.Estudiantes import Estudiantes
+from api.models.AplicPorEst import AplicPorEst
+from api.models.Aplicaciones import Aplicaciones
 '''
 from api.models.UsuPadres import UsuPadres
 from api.models.PadresEstudiantes import PadresEstudiantes
@@ -38,16 +40,15 @@ class DetTiposPregSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = DetTiposPreg
 
-
 class TiposSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Tipos
-    #DetTipoPreg = fields.Nested(DetTiposPregSchema, many=True)
+    DetTipoPreg = fields.Nested(DetTiposPregSchema, many=True)
 
 class PreguntasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Preguntas
-    #TipoPregunta = fields.Nested(TiposSchema,)
+    TipoPregunta = fields.Nested(TiposSchema,)
 
 class SeccionSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -59,6 +60,10 @@ class EncuestasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Encuestas
     Secciones = fields.Nested(SeccionSchema,many=True)
+
+class AplicPorEstSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = AplicPorEst    
 
 '''
 class EncuestasSchema(ma.SQLAlchemyAutoSchema):

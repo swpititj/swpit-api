@@ -11,5 +11,6 @@ class Dictamenes(db.Model):
     Observaciones = Column(String(300), unique=False, nullable=False)
     Recomendaciones = Column(String(300), unique=False, nullable=False)
 
-    idAplicPorEst = Column(Integer, ForeignKey('aplicporest.idAplocPorEst'))
-    aplicporest = db.relationship("AplicPorEst", backref='dictamenes', order_by=idDictamen)
+    idAplicPorEst = Column(Integer, ForeignKey('aplicporest.idAplicPorEst'))
+
+    AplicPorEst = db.relationship("AplicPorEst", backref="Dictamenes")
