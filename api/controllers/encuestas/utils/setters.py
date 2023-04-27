@@ -1,7 +1,14 @@
 #from api.data.db import db
+from api.models.Dictamenes import Dictamenes
+from api.models.DetalleAsertividad import DetalleAsertividad
+from api.models.DetalleDictHE import DetalleDictHE
+from api.models.DetalleDictInvApre import DetalleDictInvApre
+from api.models.DetalleAutoEstima import DetalleAutoEstima
+from api.models.DetalleDictHA import DetalleDictHA
 
 def set_HabilidadesEstudio(respuestas):
-    #nuevoresultado = ResultadosHE()
+    dictamen = Dictamenes()
+    detalles = DetalleDictHE()
     calificacion1 = sum([int(string) for string in respuestas[0]])
     calificacion2 = sum([int(string) for string in respuestas[1]])
     calificacion3 = sum([int(string) for string in respuestas[2]])
@@ -21,9 +28,11 @@ def set_HabilidadesEstudio(respuestas):
         db.session.commit()
         return make_response(jsonify({'res': 'resultadoshe created'}))'''
 
-    return resultadofinal
+    return (dictamen, detalles)
 
 def set_TestAsertividad(respuestas):
+    dictamen = Dictamenes()
+    detalles = DetalleAsertividad()
     cantidad1 = len([int(i) for i in respuestas[0] if int(i) == 1 ])
     cantidad2 = len([int(i) for i in respuestas[0] if int(i) == 2 ])
     cantidad3 = len([int(i) for i in respuestas[0] if int(i) == 3 ])
@@ -33,12 +42,14 @@ def set_TestAsertividad(respuestas):
         resultado = "Menor acertividad"
         mensaje = "Te aconsejamos cambiar tu conducta o en algun momento podrias ver lesionados tus derechos."
     else:
-        resultado = "Mayor acertividad"
+        resultado = "  acertividad"
         mensaje = "Te aconsejamos mantener tu conducta y evitaras que en algun momento veas lesionados tus derechos."
 
-    return resultado
+    return (dictamen, detalles)
 
 def set_CanalesAprendizaje(respuestas, id_user):
+    dictamen = Dictamenes()
+    detalles = DetalleDictInvApre()
     respuestas  = [int(i) for i in respuestas[0]]
     visual = respuestas[0]+respuestas[2]+respuestas[5]+respuestas[8]+respuestas[9]+respuestas[10]+respuestas[13]
     auditivo = respuestas[1]+respuestas[4]+respuestas[11]+respuestas[14]+respuestas[16]+respuestas[20]+respuestas[22]
@@ -53,7 +64,7 @@ def set_CanalesAprendizaje(respuestas, id_user):
     elif(visual == kinestesico): resultado = "Visual Kinestisica"
     elif(auditivo == kinestesico): resultado = "Auditiva Kinestesica"
 
-    return resultado
+    return (dictamen, detalles)
 
 def califinal(total):
     if total >= 57:
@@ -76,7 +87,9 @@ def califinal(total):
         return "Muy bajo"
     
 
-def set_autoestima(res):
+def set_autoestima(respuestas):
+    dictamen = Dictamenes()
+    detalles = DetalleAutoEstima()
     cont1=0
     cont2=0
     cont3=0
@@ -93,16 +106,19 @@ def set_autoestima(res):
             [1,4,3,2,1,4,3,2,1,4], #c
             [3,1,1,4,3,2,1,4,3,2]  #d
               ]
-    for i in range(len(res)):
-        respuesta = matriz[res[i]][i]
+    for i in range(len(respuestas)):
+        respuesta = matriz[respuestas[i]][i]
         if respuesta == 1: cont1 +=1
         elif respuesta == 2: cont2 +=1
         elif respuesta == 3: cont3 +=1
-        else: cont4 +=1
+        else: cont4 +=1 
+    return (dictamen, detalles)
 
-
-#rGreger
-
+def set_HoneyAlonso(respuestas):
+    dictamen = Dictamenes()
+    detalles = DetalleDictHA()
+    #...
+    return (dictamen, detalles)
 
 if __name__ == "__main__":
     set_autoestima([0,3,2,1,0,3,2,3,1,3])

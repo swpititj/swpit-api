@@ -4,7 +4,7 @@ from api.data.db import db
    
 
 class RespuestaEva(db.Model):
-    __tablename__ = 'respuestaeva'
+    __tablename__ = 'respuestaseva'
     idRespuestEva = Column(Integer, primary_key=True)
     Respuesta = Column(Integer, unique=False, nullable=False)
 
