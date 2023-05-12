@@ -1,21 +1,41 @@
 #from api.data.db import db
 from api.models.Dictamenes import Dictamenes
 from api.models.DetalleAsertividad import DetalleAsertividad
-from api.models.DetalleDictHE import DetalleDictHE
+from api.models.DetalleDicHE import DetalleDicHE
 from api.models.DetalleDictInvApre import DetalleDictInvApre
 from api.models.DetalleAutoEstima import DetalleAutoEstima
-from api.models.DetalleDictHA import DetalleDictHA
+from api.models.DetalleDicHA import DetalleDicHA
 
+    #DICTAMEN
+    #    EvalNumerica
+    #    EvalDescripctiva
+    #    Observaciones
+    #    Recomendaciones
+    
 def set_HabilidadesEstudio(respuestas):
     dictamen = Dictamenes()
-    detalles = DetalleDictHE()
+    detalles = DetalleDicHE()
+
+    #DetalleDicHE
+    #   HabitoEstudio
+    #   CalifNumerica
+    #   CalifDescriptiva
+
     calificacion1 = sum([int(string) for string in respuestas[0]])
     calificacion2 = sum([int(string) for string in respuestas[1]])
     calificacion3 = sum([int(string) for string in respuestas[2]])
 
     calificacionfinal = calificacion3+calificacion2+calificacion1
-    
     resultadofinal = califinal(calificacionfinal)
+
+    dictamen.EvalNumerica = calificacionfinal
+    dictamen.EvalDescripctiva = resultadofinal
+    dictamen.Observaciones = ""
+    dictamen.Recomendaciones = ""
+
+    detalles.HabitoEstudio = ""
+    detalles.CalifNumerica = calificacionfinal
+    detalles.CalifDescriptiva = resultadofinal
 
     '''resultado = ResultadosHE.query.filter_by(idUsuario=id_user).first()
     if resultado:
@@ -33,11 +53,17 @@ def set_HabilidadesEstudio(respuestas):
 def set_TestAsertividad(respuestas):
     dictamen = Dictamenes()
     detalles = DetalleAsertividad()
+
+    #DetalleAsertividad
+    #   FactorDeAsertividad
+    #   ValorNumerico
+
     cantidad1 = len([int(i) for i in respuestas[0] if int(i) == 1 ])
     cantidad2 = len([int(i) for i in respuestas[0] if int(i) == 2 ])
     cantidad3 = len([int(i) for i in respuestas[0] if int(i) == 3 ])
     cantidad4 = len([int(i) for i in respuestas[0] if int(i) == 4 ])
-    resultado
+    resultado = ""
+    cantidad_final =  cantidad1+cantidad2+cantidad3+cantidad4
     if cantidad3+cantidad4 > cantidad1+cantidad2:
         resultado = "Menor acertividad"
         mensaje = "Te aconsejamos cambiar tu conducta o en algun momento podrias ver lesionados tus derechos."
@@ -45,16 +71,30 @@ def set_TestAsertividad(respuestas):
         resultado = "  acertividad"
         mensaje = "Te aconsejamos mantener tu conducta y evitaras que en algun momento veas lesionados tus derechos."
 
+    dictamen.EvalNumerica = cantidad_final
+    dictamen.EvalDescripctiva = resultado
+    dictamen.Observaciones = ""
+    dictamen.Recomendaciones = mensaje
+
+    detalles.FactorDeAcertividad = resultado
+    detalles.ValorNumerico = cantidad_final
+
     return (dictamen, detalles)
 
-def set_CanalesAprendizaje(respuestas, id_user):
+def set_CanalesAprendizaje(respuestas):
     dictamen = Dictamenes()
     detalles = DetalleDictInvApre()
+
+    #CanalesAprendizaje
+    #   Canal
+    #   ValorNumerico
+
     respuestas  = [int(i) for i in respuestas[0]]
     visual = respuestas[0]+respuestas[2]+respuestas[5]+respuestas[8]+respuestas[9]+respuestas[10]+respuestas[13]
     auditivo = respuestas[1]+respuestas[4]+respuestas[11]+respuestas[14]+respuestas[16]+respuestas[20]+respuestas[22]
     kinestesico = respuestas[3]+respuestas[6]+respuestas[7]+respuestas[12]+respuestas[18]+respuestas[21]+respuestas[23]
-    
+    cantidad_final = visual+auditivo+kinestesico
+
     resultado = ""
     if(auditivo > visual and auditivo > kinestesico): resultado = "Auditiva"
     elif(visual > auditivo and visual > kinestesico): resultado = "Visual"
@@ -63,6 +103,14 @@ def set_CanalesAprendizaje(respuestas, id_user):
     elif(visual == auditivo): resultado = "Visual Auditiva"
     elif(visual == kinestesico): resultado = "Visual Kinestisica"
     elif(auditivo == kinestesico): resultado = "Auditiva Kinestesica"
+
+    dictamen.EvalNumerica = cantidad_final
+    dictamen.EvalDescripctiva = resultado
+    dictamen.Observaciones = ""
+    dictamen.Recomendaciones = ""
+
+    detalles.Canal = resultado
+    detalles.ValorNumerico = cantidad_final
 
     return (dictamen, detalles)
 
@@ -86,19 +134,21 @@ def califinal(total):
     else:
         return "Muy bajo"
     
-
 def set_autoestima(respuestas):
     dictamen = Dictamenes()
     detalles = DetalleAutoEstima()
-    cont1=0
-    cont2=0
-    cont3=0
-    cont4=0
 
-    m1 = "Tienes un nivel algo bajo de autoestima y se nota en la valoracion que haces de ti mismo, de tu trabajo y de tu fortuna en la vida."
-    m2 = "Tu nivel de autoestima es sificiente pero mas a menudo de lo que te gustaria, te falla y te abandona."
-    m3 = "Tu nivel de autoestima es muy bueno, sabes darle el valor a las cosas que merecen, reconoces lo bueno y no te dejas amilanar facilmente por las adversidades."
-    m4 = "Tienes un alto nivel de autoestima y mucha confianza y seguridad en ti mismo. Ambos sentimientos con muy positivos y necesarios para conseguir mucho mas de lo que nos proponemos."
+    #DetalleAutoEstima
+    #   FactorDeAutoestima
+    #   ValorNumerico
+
+    cont = [0,0,0,0]
+
+    resultados = ["Bajo",
+    "Suficiente",
+    "Muy bueno",
+    "Alto"]
+
     matriz = [
         #    1 2 3 4 5 6 7 8 9 10
             [4,3,2,1,4,3,2,1,4,3], #a
@@ -106,20 +156,47 @@ def set_autoestima(respuestas):
             [1,4,3,2,1,4,3,2,1,4], #c
             [3,1,1,4,3,2,1,4,3,2]  #d
               ]
+    respuestas = respuestas[0]
     for i in range(len(respuestas)):
         respuesta = matriz[respuestas[i]][i]
-        if respuesta == 1: cont1 +=1
-        elif respuesta == 2: cont2 +=1
-        elif respuesta == 3: cont3 +=1
-        else: cont4 +=1 
+        if respuesta == 1: cont[0] +=1
+        elif respuesta == 2: cont[1] +=1
+        elif respuesta == 3: cont[2] +=1
+        else: cont[3] +=1 
+
+    max = 0
+    for i in range(4):
+        if cont[i] > max:
+            max = i
+
+    cantidad_final = sum(cont)
+    resultado = resultados[max]
+
+    dictamen.EvalNumerica = cantidad_final
+    dictamen.EvalDescripctiva = resultado
+    dictamen.Observaciones = ""
+    dictamen.Recomendaciones = ""
+
+    detalles.ValorNumerico = cantidad_final
+    detalles.FactorDeAutoEstima = resultado
+
     return (dictamen, detalles)
 
 def set_HoneyAlonso(respuestas):
     dictamen = Dictamenes()
-    detalles = DetalleDictHA()
-    #...
+    detalles = DetalleDicHA()
+
+    #DetalleDicHA
+    #   Estilo
+    #   Resultado
+
+    #....
+
+    dictamen.EvalNumerica = ""
+    dictamen.EvalDescripctiva = ""
+    dictamen.Observaciones = ""
+    dictamen.Recomendaciones = ""
+
+    detalles.Estilo = ""
+    detalles.Resultado = ""
     return (dictamen, detalles)
-
-if __name__ == "__main__":
-    set_autoestima([0,3,2,1,0,3,2,3,1,3])
-

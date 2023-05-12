@@ -10,5 +10,5 @@ class UsuarioPersonal(db.Model):
 
     idPersonal = Column(Integer, ForeignKey('personal.idPersonal'))
     idUsuarios = Column(Integer, ForeignKey('usuarios.idUsuario'))
-    personal = db.relationship("Personal", bnackref='usuariopersonal', order_by=idUsuarioPersonal)
-    usuarios = db.relationship("Usuarios", backref='usuariopersonal', order_by=idUsuarioPersonal)
+    #personal = db.relationship("Personal", bnackref='usuariopersonal', order_by=idUsuarioPersonal)
+    #usuarios = db.relationship("Usuarios", backref='usuariopersonal', order_by=idUsuarioPersonal)

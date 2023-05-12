@@ -7,10 +7,15 @@ class Dictamenes(db.Model):
     idDictamen = Column(Integer,primary_key=True)
     FechaAplicacion = Column(Date, unique=False, nullable=False)
     EvalNumerica = Column(Integer, unique=False, nullable=False)
-    EvalDescriptiva = Column(String(200), unique=False, nullable=False)
+    EvalDescripctiva = Column(String(200), unique=False, nullable=False)
     Observaciones = Column(String(300), unique=False, nullable=False)
     Recomendaciones = Column(String(300), unique=False, nullable=False)
 
     idAplicPorEst = Column(Integer, ForeignKey('aplicporest.idAplicPorEst'))
+    #aplicporest = db.relationship("AplicPorEst", backref='dictamenes', order_by=idDictamen)
 
-    AplicPorEst = db.relationship("AplicPorEst", backref="Dictamenes")
+    DetalleAutoEstima = db.relationship("DetalleAutoEstima")
+    DetalleDictInvApre = db.relationship("DetalleDictInvApre")
+    DetalleDicHA = db.relationship("DetalleDicHA")
+    DetalleDicHE = db.relationship("DetalleDicHE")
+    DetalleAsertividad = db.relationship("DetalleAsertividad")

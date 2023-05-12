@@ -10,6 +10,6 @@ class RespuestaEva(db.Model):
 
     idDictamen = Column(Integer, ForeignKey('dictamenes.idDictamen'))
     idPregunta =  Column(Integer, ForeignKey('preguntas.idPregunta'))
-    dictamen = db.relationship("Dictamenes", backref='respuestaeva', order_by=idRespuestEva)
-    pregunta = db.relationship("Preguntas", backref='respuestaeva', order_by=idRespuestEva)
+    #dictamen = db.relationship("Dictamenes", backref='respuestaeva', order_by=idRespuestEva)
+    #pregunta = db.relationship("Preguntas", backref='respuestaeva', order_by=idRespuestEva)
 

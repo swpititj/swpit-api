@@ -10,5 +10,5 @@ class UsuPadres(db.Model):
 
     idUsuario = Column(Integer, ForeignKey('usuarios.idusuario'))
     idPadreFamilia = Column(Integer, ForeignKey('padresFamilia.idPadreFamilia'))
-    padresFamilia = db.relationship("PadresFamilia", backref='usupadres', order_by=idUsuPadres)
-    usuarios = db.relationship("Usuarios", backref='usupadres', order_by=idUsuPadres)
+    #padresFamilia = db.relationship("PadresFamilia", backref='usupadres', order_by=idUsuPadres)
+    #usuarios = db.relationship("Usuarios", backref='usupadres', order_by=idUsuPadres)

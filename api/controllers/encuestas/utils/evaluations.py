@@ -7,20 +7,19 @@ from api.models.Dictamenes import Dictamenes
 from api.models.DetalleAsertividad import DetalleAsertividad
 from api.models.DetalleDictInvApre import DetalleDictInvApre
 from api.models.DetalleAutoEstima import DetalleAutoEstima
-from api.models.DetalleDictHA import DetalleDictHA
-from api.models.DetalleDictHE import DetalleDictHE
+from api.models.DetalleDicHA import DetalleDicHA
+from api.models.DetalleDicHE import DetalleDicHE
 from api.models.RespuestasEva import RespuestaEva
 from api.schemas.Schemas import AplicPorEstSchema
-from api.controllers.encuestas.utils.setters import set_HabilidadesEstudio, set_CanalesAprendizaje, set_TestAsertividad
+from api.controllers.encuestas.utils.setters import set_HabilidadesEstudio, set_CanalesAprendizaje, set_TestAsertividad, set_autoestima,set_HoneyAlonso
 from api.data.db import db
 
-def evaluate_survey(survey_data, user_data):
-    idSurvey = survey_data['idEncuesta']
+def evaluate_survey(survey_data, user_data, survey_id): 
     answers = survey_data['respuestas']
     #CHECAR TABLA APLICACIONES
     idApplication = 1
     #GUARDAR TABLA APLICPOREST
-    date_time_start = datetime.datetime.fromtimestamp(survey_data['HoraInicial']/1000)
+    date_time_start = datetime.datetime.fromtimestamp(survey_data['HoraInicio']/1000)
     date_time_end = datetime.datetime.fromtimestamp(survey_data['HoraFinal']/1000)
 
     aplic_por_est = AplicPorEst()
@@ -30,27 +29,48 @@ def evaluate_survey(survey_data, user_data):
     aplic_por_est.idEstudiante = user_data['idUser']
     aplic_por_est.idAplicacion = idApplication
 
-    #db.session.add(aplic_por_est)
-    #db.session.commit()
+    db.session.add(aplic_por_est)
+    db.session.commit()
 
     idAplicPorEst = aplic_por_est.idAplicPorEst
 
+    dictamen = Dictamenes()
     #GUARDAR EL DICTAMEN Y DETALLES
-    # if idSurvey == 1: # habilidades de estudio
-    #     (opinion, details) = set_HabilidadesEstudio(answers)
-    # elif idSurvey == 2: # test asertividad
-    #     (opinion, details) = set_TestAsertividad(answers)
-    # elif idSurvey == 3: # canales de apredizaje
-    #     (opinion, details) = set_CanalesAprendizaje(answers)
-    # elif idSurvey == 4: # autoestima
-    #     (opinion, details) = set_HabilidadesEstudio(answers)
-    # elif idSurvey == 5: # honey alonso
-    #     (opinion, details) = set_HabilidadesEstudio(answers)
+    if survey_id == 1: # habilidades de estudio
+        (dictamen, detalles) = set_HabilidadesEstudio(answers)
+    elif survey_id == 2: # test asertividad
+        (dictamen, detalles) = set_TestAsertividad(answers)
+    elif survey_id == 3: # canales de apredizaje
+        (dictamen, detalles) = set_CanalesAprendizaje(answers)
+    elif survey_id == 4: # autoestima
+        (dictamen, detalles) = set_autoestima(answers)
+    elif survey_id == 5: # honey alonso
+        (dictamen, detalles) = set_HoneyAlonso(answers)
+    
 
-    idDictamen = 1
+    #DICTAMEN
+    #    idAplicPorEst
+    #    FechaAplicacion
+    dictamen.idAplicPorEst = aplic_por_est.idAplicPorEst
+    dictamen.FechaAplicacion = aplic_por_est.FechaAplicacion
+    db.session.add(dictamen)
+    db.session.commit()
+
+    idDictamen = dictamen.idDictamen
+
+    #Details
+    #   ObservacionesTutor
+    #   idDictamen
+    #   idEncuesta
+    detalles.idDictamen = dictamen.idDictamen
+    detalles.idEncuesta = survey_id
+    detalles.ObservacionesTutor = ""
+    db.session.add(detalles)
+    db.session.commit()
+
 
     #GUARDANDO PREGUNTAS 
-    questions_ids = db.engine.execute('SELECT p.idPregunta from preguntas p inner join seccion s on p.idSeccion = s.idSeccion where s.idEncuesta = '+ str(idSurvey) +' ORDER by p.idPregunta asc')
+    questions_ids = db.engine.execute('SELECT p.idPregunta FROM preguntas p INNER JOIN seccion s ON p.idSeccion = s.idSeccion WHERE s.idEncuesta = '+ str(survey_id) +' ORDER BY p.idPregunta asc')
     questions = [row[0] for row in questions_ids]
     answers_dic = []
     for seccion in answers:

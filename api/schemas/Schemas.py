@@ -10,6 +10,14 @@ from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.Estudiantes import Estudiantes
 from api.models.AplicPorEst import AplicPorEst
 from api.models.Aplicaciones import Aplicaciones
+from api.models.Dictamenes import Dictamenes
+
+from api.models.DetalleAutoEstima import DetalleAutoEstima
+from api.models.DetalleAsertividad import DetalleAsertividad
+from api.models.DetalleDicHA import DetalleDicHA
+from api.models.DetalleDicHE import DetalleDicHE
+from api.models.DetalleDictInvApre import DetalleDictInvApre
+
 '''
 from api.models.UsuPadres import UsuPadres
 from api.models.PadresEstudiantes import PadresEstudiantes
@@ -35,7 +43,6 @@ class EstudiantesSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Estudiantes 
 
-
 class DetTiposPregSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = DetTiposPreg
@@ -53,7 +60,7 @@ class PreguntasSchema(ma.SQLAlchemyAutoSchema):
 class SeccionSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Seccion
-        include_fk = True
+        #include_fk = True
     Preguntas = fields.Nested(PreguntasSchema,many=True)
 
 class EncuestasSchema(ma.SQLAlchemyAutoSchema):
@@ -61,10 +68,57 @@ class EncuestasSchema(ma.SQLAlchemyAutoSchema):
         model = Encuestas
     Secciones = fields.Nested(SeccionSchema,many=True)
 
+class EncuestasCortasSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Encuestas    
+    
+class DetalleAutoEstimaSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DetalleAutoEstima
+        exclude = ('idDetalleAutoEstima','ObservacionesTutor','FactorDeAutoEstima')
+    FactorDeAutoestima = ma.auto_field("FactorDeAutoEstima", dump_only=True)
+    ObservacionesDelTutor = ma.auto_field("ObservacionesTutor", dump_only=True)
+
+class DetalleDictInvApreSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DetalleDictInvApre
+        exclude = ('idDetalleDictInvApre','ObservacionesTutor')
+    ObservacionesDelTutor = ma.auto_field("ObservacionesTutor", dump_only=True)
+
+class DetalleDicHASchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DetalleDicHA
+        exclude = ('idDetalleDicHA','ObservacionesTutor')
+    ObservacionesDelTutor = ma.auto_field("ObservacionesTutor", dump_only=True)
+
+class DetalleDicHESchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DetalleDicHE
+        exclude = ('idDetalleDicHE','ObservacionesTutor', 'CalifNumerica', 'CalifDescriptiva')
+    ObservacionesDelTutor = ma.auto_field("ObservacionesTutor", dump_only=True)
+    CalificacionNumerica = ma.auto_field('CalifNumerica', dump_only=True)
+    CalificacionDescriptiva = ma.auto_field('CalifDescriptiva', dump_only=True)
+
+class DetalleAsertividadSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = DetalleAsertividad
+        exclude = ('idDetalleAsertividad','ObservacionesTutor')
+    ObservacionesDelTutor = ma.auto_field("ObservacionesTutor", dump_only=True)
+
+class DictamenesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Dictamenes
+    DetalleAutoEstima = fields.Nested(DetalleAutoEstimaSchema, many=True)
+    DetalleDictInvApre = fields.Nested(DetalleDictInvApreSchema, many=True)
+    DetalleDicHA = fields.Nested(DetalleDicHASchema, many=True)
+    DetalleDicHE = fields.Nested(DetalleDicHESchema, many=True)
+    DetalleAsertividad = fields.Nested(DetalleAsertividadSchema, many=True)
+
 class AplicPorEstSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = AplicPorEst    
-
+        model = AplicPorEst
+    Dictamen = fields.Nested(DictamenesSchema, many=True)
+        
 '''
 class EncuestasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

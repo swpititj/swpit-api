@@ -11,5 +11,5 @@ class DetalleDictInvApre(db.Model):
 
     idDictamen = Column(Integer, ForeignKey('dictamenes.idDictamen'))
     idEncuesta =  Column(Integer, ForeignKey('encuestas.idEncuesta'))
-    dictamen = db.relationship("Dictamenes", backref='detalledictinvapre', order_by=idDetalleDictInvApre)
-    encuesta = db.relationship("Encuestas", backref='detalledictinvapre', order_by=idDetalleDictInvApre)
+    #dictamen = db.relationship("Dictamenes", backref='detalledictinvapre', order_by=idDetalleDictInvApre)
+    #encuesta = db.relationship("Encuestas", backref='detalledictinvapre', order_by=idDetalleDictInvApre)

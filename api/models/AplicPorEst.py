@@ -11,5 +11,6 @@ class AplicPorEst(db.Model):
 
     idEstudiante = Column(Integer, ForeignKey('estudiantes.idEstudiante'))
     idAplicacion = Column(Integer,ForeignKey('aplicaciones.idAplicacion'))
-    Estudiantes = db.relationship("Estudiantes")
-    Aplicaciones = db.relationship("Aplicaciones")
+    #Estudiantes = db.relationship("Estudiantes")
+    #Aplicaciones = db.relationship("Aplicaciones")
+    Dictamen = db.relationship("Dictamenes")

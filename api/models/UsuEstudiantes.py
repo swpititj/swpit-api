@@ -10,5 +10,5 @@ class UsuEstudiantes(db.Model):
 
     idEstudiante = Column(Integer, ForeignKey('estudiantes.idEstudiante'))
     idUsuario = Column(Integer, ForeignKey('usuarios.idusuario'))
-    estudiantes = db.relationship ("Estudiantes", backref='usuestudiantes', order_by=idUsuEstudiante)
-    usuarios = db.relationship("Usuarios", backref='usuestudiantes', order_by=idUsuEstudiante)
+    #estudiantes = db.relationship ("Estudiantes", backref='usuestudiantes', order_by=idUsuEstudiante)
+    #usuarios = db.relationship("Usuarios", backref='usuestudiantes', order_by=idUsuEstudiante)
