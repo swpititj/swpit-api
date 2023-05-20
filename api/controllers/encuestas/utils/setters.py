@@ -190,7 +190,35 @@ def set_HoneyAlonso(respuestas):
     #   Estilo
     #   Resultado
 
-    #....
+    activo = [3,5,7,9,13,20,26,27,35,37,41,43,46,48,51,61,67,74,75,77]
+    reflexivo = [10,16,18,19,28,31,32,34,36,39,42,44,49,55,58,63,65,69,70,79]
+    teorico = [2,4,6,11,15,17,21,23,25,29,33,35,50,54,60,64,66,71,78,80]
+    pragmatico = [1,8,12,14,22,24,30,38,40,47,52,53,56,57,59,62,68,70,73,76]
+
+    definiciones = [
+        
+    ]
+
+    cont_activo = 0
+    cont_refle = 0
+    cont_teo = 0
+    cont_prag = 0
+
+    respuestas = respuestas[0]
+
+    for i, r in enumerate(respuestas, start=1):
+        if r == 1:
+            cont_activo += activo.count(i)
+            cont_refle += reflexivo.count(i)
+            cont_teo += teorico.count(i)
+            cont_prag += pragmatico.count(i)
+
+    arr_cont = [cont_activo, cont_refle, cont_teo, cont_prag]
+    maximo = max(arr_cont)
+    indices_maximos = []
+    for i in range(len(arr_cont)):
+        if arr_cont[i] == maximo:
+            indices_maximos.append(i)
 
     dictamen.EvalNumerica = ""
     dictamen.EvalDescripctiva = ""
