@@ -196,8 +196,18 @@ def set_HoneyAlonso(respuestas):
     pragmatico = [1,8,12,14,22,24,30,38,40,47,52,53,56,57,59,62,68,70,73,76]
 
     definiciones = [
-        
+     "Busca experiencias nuevas, son de mente abierta, nada escépticos y acometen con entusiasmo las tareas nuevas. Son muy activos, piensan que hay que intentarlo todo por lo menos una vez.",
+     "Antepone la reflexión a la acción y observa con detenimiento las distintas experiencias. Les gusta considerar las experiencias y observarlas desde diferentes perspectivas.",
+     "Enfoque lógico de los problemas, necesitan integrar la experiencia en un marco teórico de referencia. Enfocan los problemas de forma vertical escalonada, por etapas lógicas. Tienden a ser perfeccionistas Integran los hechos en teorías coherentes.",
+     "Su punto fuerte es la experimentación y la aplicación de ideas. Descubren el aspecto positivo de las nuevas ideas y aprovechan la primera oportunidad para experimentarlas. Les gusta actuar rápidamente y con seguridad con aquellas ideas y proyectos que les atraen."
     ]
+
+    tipos = [
+         "Activo",
+         "Reflexivo",
+         "Teorico",
+         "Pragmatico"
+     ]
 
     cont_activo = 0
     cont_refle = 0
@@ -215,16 +225,19 @@ def set_HoneyAlonso(respuestas):
 
     arr_cont = [cont_activo, cont_refle, cont_teo, cont_prag]
     maximo = max(arr_cont)
-    indices_maximos = []
+    resultado = ""
+    estilo = ""
     for i in range(len(arr_cont)):
         if arr_cont[i] == maximo:
-            indices_maximos.append(i)
+            resultado=resultado+" "+tipos[i]+": "+definiciones[i]
+            estilo=estilo+" "+tipos[i]
+            
 
-    dictamen.EvalNumerica = ""
-    dictamen.EvalDescripctiva = ""
+    dictamen.EvalNumerica = maximo
+    dictamen.EvalDescripctiva = estilo
     dictamen.Observaciones = ""
     dictamen.Recomendaciones = ""
 
-    detalles.Estilo = ""
-    detalles.Resultado = ""
+    detalles.Estilo = estilo
+    detalles.Resultado = resultado
     return (dictamen, detalles)
