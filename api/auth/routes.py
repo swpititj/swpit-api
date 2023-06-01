@@ -52,7 +52,7 @@ def logout():
 @auth_bp.get('/check')
 @jwt_required()
 def check():
-    return jsonify(current_user)
+    return make_response(jsonify(current_user),200)
 
 #@auth_bp.post('/create')
 #@jwt_required()
