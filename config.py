@@ -12,7 +12,7 @@ class Config:
     JWT_COOKIE_CSRF_PROTECT=True
     JWT_CSRF_IN_COOKIES = False
     JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=30)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=100)
     #JWT_COOKIE_SECURE = False
 
     #JWT_COOKIE_DOMAIN = [".localhost"]
@@ -21,7 +21,7 @@ class ProdConfig(Config):
     FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:{}@35.225.253.13:3306/swpit'.format(Config.SQL_CLOUD_PASSWORD)
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:{}@35.193.137.245:3306/swpit'.format(Config.SQL_CLOUD_PASSWORD)
     JWT_SECRET_KEY = Config.SQL_CLOUD_PASSWORD
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -31,6 +31,6 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:{}@localhost:3306/swpit'.format(Config.SQL_LOCAL_PASSWORD)
-    JWT_SECRET_KEY = "SECRETO" #Config.SQL_LOCAL_PASSWORD
+    JWT_SECRET_KEY = Config.SQL_LOCAL_PASSWORD
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     #JWT_ACCESS_TOKEN_EXPIRES = False

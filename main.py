@@ -14,7 +14,7 @@ CORS(app,supports_credentials=True)
 #CORS(app)
 
 #Configuration
-app.config.from_object(config.DevConfig)
+app.config.from_object(config.ProdConfig)
 
 #SQL
 db.init_app(app)
