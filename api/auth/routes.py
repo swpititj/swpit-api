@@ -60,7 +60,7 @@ def check():
         "idUserType": current_user['idUserType'],
         "name": current_user['name']
     }
-    return make_response(jsonify(current_user), 200)
+    return make_response(jsonify(user), 200)
 
 #@auth_bp.post('/create')
 #@jwt_required()
