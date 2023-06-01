@@ -40,13 +40,13 @@ def login():
     response_data['csrf'] = get_csrf_token(token)
     
     response = jsonify(response_data)
-    set_access_cookies(response, token,domain=".127.0.0.1")
+    set_access_cookies(response, token,domain="localhost")
     return response
 
 @auth_bp.post('/logout')
 def logout():
     response = jsonify("logout successful")
-    unset_jwt_cookies(response,domain=".127.0.0.1")
+    unset_jwt_cookies(response,domain="localhost")
     return response
 
 @auth_bp.get('/check')
