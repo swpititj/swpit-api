@@ -13,7 +13,7 @@ class Config:
     JWT_CSRF_IN_COOKIES = False
     JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=100)
-    #JWT_COOKIE_SECURE = False
+    JWT_COOKIE_SECURE = true
     JWT_COOKIE_DOMAIN = [".localhost"]
 
 class ProdConfig(Config):
