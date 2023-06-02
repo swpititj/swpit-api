@@ -19,8 +19,8 @@ class Config:
 
 class ProdConfig(Config):
     FLASK_ENV = 'production'
-    DEBUG = False
-    TESTING = False
+    DEBUG = True
+    TESTING = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:{}@35.193.137.245:3306/swpit'.format(Config.SQL_CLOUD_PASSWORD)
     JWT_SECRET_KEY = Config.SQL_CLOUD_PASSWORD
     SQLALCHEMY_TRACK_MODIFICATIONS = False
