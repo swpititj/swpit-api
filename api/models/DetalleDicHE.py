@@ -3,7 +3,7 @@ from sqlalchemy import Integer,Column,String,Boolean,ForeignKey,CHAR,Date,Time
 from api.data.db import db
 
 class DetalleDicHE(db.Model):
-    __tablename__ = 'DetalleDicHE'
+    __tablename__ = 'detallediche'
     idDetalleDicHE = Column(Integer, primary_key=True)
     HabitoEstudio = Column(String(30), unique=False, nullable=False)
     CalifNumerica = Column(Integer, unique=False, nullable=False)

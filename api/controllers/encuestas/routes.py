@@ -44,13 +44,14 @@ def resultadosta_get(survey_id):
     else:
         return jsonify(''), 404
 
-    res = db.first_or_404(
-    AplicPorEst.query.filter_by(idEstudiante=student_id)\
+    res_aplicporest = AplicPorEst.query.filter_by(idEstudiante=student_id)\
         .join(Dictamenes, Dictamenes.idAplicPorEst==AplicPorEst.idAplicPorEst)\
         .join(detalle, detalle.idDictamen==Dictamenes.idDictamen)\
-        .filter_by(idEncuesta=survey_id)\
-    )
-    return jsonify(AplicPorEstSchema().dump(res))
+        .filter_by(idEncuesta=survey_id)
+
+    res_first = db.first_or_404(res_aplicporest)
+    
+    return jsonify(AplicPorEstSchema().dump(res_first))
 
 @encuesta_bp.get('/<id>')
 #@jwt_required()

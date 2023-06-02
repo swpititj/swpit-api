@@ -58,10 +58,10 @@ def set_TestAsertividad(respuestas):
     #   FactorDeAsertividad
     #   ValorNumerico
 
-    cantidad1 = len([int(i) for i in respuestas[0] if int(i) == 1 ])
-    cantidad2 = len([int(i) for i in respuestas[0] if int(i) == 2 ])
-    cantidad3 = len([int(i) for i in respuestas[0] if int(i) == 3 ])
-    cantidad4 = len([int(i) for i in respuestas[0] if int(i) == 4 ])
+    cantidad1 = len([int(i) for i in respuestas[0] if int(i) == 0 ])
+    cantidad2 = len([int(i) for i in respuestas[0] if int(i) == 1 ])
+    cantidad3 = len([int(i) for i in respuestas[0] if int(i) == 2 ])
+    cantidad4 = len([int(i) for i in respuestas[0] if int(i) == 3 ])
     resultado = ""
     cantidad_final =  cantidad1+cantidad2+cantidad3+cantidad4
     if cantidad3+cantidad4 > cantidad1+cantidad2:
@@ -159,9 +159,9 @@ def set_autoestima(respuestas):
     respuestas = respuestas[0]
     for i in range(len(respuestas)):
         respuesta = matriz[respuestas[i]][i]
-        if respuesta == 1: cont[0] +=1
-        elif respuesta == 2: cont[1] +=1
-        elif respuesta == 3: cont[2] +=1
+        if respuesta == 0: cont[0] +=1
+        elif respuesta == 1: cont[1] +=1
+        elif respuesta == 2: cont[2] +=1
         else: cont[3] +=1 
 
     max = 0
@@ -235,9 +235,9 @@ def set_HoneyAlonso(respuestas):
 
     dictamen.EvalNumerica = maximo
     dictamen.EvalDescripctiva = estilo
-    dictamen.Observaciones = ""
+    dictamen.Observaciones = resultado
     dictamen.Recomendaciones = ""
 
     detalles.Estilo = estilo
-    detalles.Resultado = resultado
+    detalles.Resultado = maximo
     return (dictamen, detalles)

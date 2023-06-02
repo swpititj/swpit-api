@@ -21,4 +21,5 @@ def password_validation(username, password, userType):
         else:
             return None
     except Exception as e:
+        print(e)
         return None
