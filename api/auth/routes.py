@@ -2,7 +2,10 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_jwt_extended import jwt_required, create_access_token, set_access_cookies, unset_jwt_cookies, current_user, get_csrf_token
 from api.auth.validation import password_validation
 from api.auth.jwt import jwt
-import datetime
+from api.data.db import db
+from api.models.Usuarios import Usuarios
+from api.models.UsuEstudiantes import UsuEstudiantes
+from api.models.Estudiantes import Estudiantes
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -61,6 +64,24 @@ def check():
         "name": current_user['name']
     }
     return make_response(jsonify(user), 200)
+
+@auth_bp.post('/create_users')
+@jwt_required()
+def create():
+    for i in range(50):
+        user = 'user'+str(i+1)
+        usu =Usuarios(Nombre=user, Clave='$2a$12$sbrPwUH6UsWUYzXNCJXWb.S3niJ7T55ISR5SvU//uGQzSqTwgjxau', Correo='correo'+str(i)+'@correo.com')
+        db.session.add(usu)
+        db.session.commit()
+        
+        est = Estudiantes(NumeroControl='1842000'+str(i), ApellidoPaterno='ITJ', Nombre='Estudiante', Sexo='I')
+        db.session.add(est)
+        db.session.commit()
+        
+        usu_est = UsuEstudiantes(idEstudiante=est.idEstudiante, idUsuario=usu.idusuario)
+        db.session.add(usu_est)
+        db.session.commit()
+        pass
 
 #@auth_bp.post('/create')
 #@jwt_required()
