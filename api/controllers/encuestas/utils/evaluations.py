@@ -26,7 +26,7 @@ def evaluate_survey(survey_data, user_data, survey_id):
     aplic_por_est.FechaAplicacion = date_time_end.strftime('%Y-%m-%d')
     aplic_por_est.HoraInicio = date_time_start.strftime("%H:%M:%S")
     aplic_por_est.HoraFinal = date_time_end.strftime("%H:%M:%S")
-    aplic_por_est.idEstudiante = user_data['idUser']
+    aplic_por_est.idEstudiante = user_data['idUserType']
     aplic_por_est.idAplicacion = idApplication
 
     db.session.add(aplic_por_est)
