@@ -28,14 +28,14 @@ def set_HabilidadesEstudio(respuestas):
     calificacionfinal = calificacion3+calificacion2+calificacion1
     resultadofinal = califinal(calificacionfinal)
 
-    dictamen.EvalNumerica = calificacionfinal
-    dictamen.EvalDescripctiva = resultadofinal
+    dictamen.EvalNumerica = 0
+    dictamen.EvalDescripctiva = ""
     dictamen.Observaciones = ""
     dictamen.Recomendaciones = ""
 
-    detalles.HabitoEstudio = ""
-    detalles.CalifNumerica = calificacionfinal
-    detalles.CalifDescriptiva = resultadofinal
+    detalles.HabitoEstudio = resultadofinal
+    detalles.CalifNumerica = 0
+    detalles.CalifDescriptiva = ""
 
     '''resultado = ResultadosHE.query.filter_by(idUsuario=id_user).first()
     if resultado:
@@ -65,19 +65,19 @@ def set_TestAsertividad(respuestas):
     resultado = ""
     cantidad_final =  cantidad1+cantidad2+cantidad3+cantidad4
     if cantidad3+cantidad4 > cantidad1+cantidad2:
-        resultado = "Menor acertividad"
+        resultado = "Nivel Menor"
         mensaje = "Te aconsejamos cambiar tu conducta o en algun momento podrias ver lesionados tus derechos."
     else:
-        resultado = "  acertividad"
+        resultado = "Nivel Mayor"
         mensaje = "Te aconsejamos mantener tu conducta y evitaras que en algun momento veas lesionados tus derechos."
 
-    dictamen.EvalNumerica = cantidad_final
-    dictamen.EvalDescripctiva = resultado
+    dictamen.EvalNumerica = 0
+    dictamen.EvalDescripctiva = ""
     dictamen.Observaciones = ""
     dictamen.Recomendaciones = mensaje
 
     detalles.FactorDeAcertividad = resultado
-    detalles.ValorNumerico = cantidad_final
+    detalles.ValorNumerico = 0
 
     return (dictamen, detalles)
 
@@ -96,21 +96,21 @@ def set_CanalesAprendizaje(respuestas):
     cantidad_final = visual+auditivo+kinestesico
 
     resultado = ""
-    if(auditivo > visual and auditivo > kinestesico): resultado = "Auditiva"
+    if(auditivo > visual and auditivo > kinestesico): resultado = "Auditivo"
     elif(visual > auditivo and visual > kinestesico): resultado = "Visual"
-    elif(kinestesico > auditivo and kinestesico > visual): resultado = "Kinestesica"
-    elif(auditivo == kinestesico == visual): resultado = "Visual Auditiva Kinestesica"
-    elif(visual == auditivo): resultado = "Visual Auditiva"
-    elif(visual == kinestesico): resultado = "Visual Kinestisica"
-    elif(auditivo == kinestesico): resultado = "Auditiva Kinestesica"
+    elif(kinestesico > auditivo and kinestesico > visual): resultado = "Kinestesico"
+    elif(auditivo == kinestesico == visual): resultado = "Visual Auditivo Kinestesico"
+    elif(visual == auditivo): resultado = "Visual Auditivo"
+    elif(visual == kinestesico): resultado = "Visual Kinestisico"
+    elif(auditivo == kinestesico): resultado = "Auditivo Kinestesico"
 
-    dictamen.EvalNumerica = cantidad_final
-    dictamen.EvalDescripctiva = resultado
+    dictamen.EvalNumerica = 0
+    dictamen.EvalDescripctiva = "Visual: "+str(visual)+", Auditivo: "+str(auditivo)+", Kinestesico: "+str(kinestesico)
     dictamen.Observaciones = ""
     dictamen.Recomendaciones = ""
 
     detalles.Canal = resultado
-    detalles.ValorNumerico = cantidad_final
+    detalles.ValorNumerico = 0
 
     return (dictamen, detalles)
 
@@ -149,6 +149,11 @@ def set_autoestima(respuestas):
     "Muy bueno",
     "Alto"]
 
+    resultados_extensos = ["Tienes un nivel algo bajo de autoestima y se nota en la valoración que haces de ti mismo, de tu trabajo y de tu fortuna en la vida. Una de las razones por las que percibimos más las cosas negativas es que estas son más destacables que las positivas.",
+    "Tu nivel de autoestima es suficiente pero más a menudo de lo que te gustaría, te falla y te abandona. ",
+    "Tu nivel de autoestima es muy bueno, sabes dar a las cosas el valor que merecen, reconoces lo bueno y no te dejas amilanar fácilmente por las adversidades.",
+    "Tienes un alto nivel de autoestima y mucha confianza y seguridad en ti mismo. "]
+
     matriz = [
         #    1 2 3 4 5 6 7 8 9 10
             [4,3,2,1,4,3,2,1,4,3], #a
@@ -171,13 +176,14 @@ def set_autoestima(respuestas):
 
     cantidad_final = sum(cont)
     resultado = resultados[max]
+    resultado_extenso = resultados_extensos[max]
 
-    dictamen.EvalNumerica = cantidad_final
-    dictamen.EvalDescripctiva = resultado
-    dictamen.Observaciones = ""
+    dictamen.EvalNumerica = 0
+    dictamen.EvalDescripctiva = ""
+    dictamen.Observaciones = resultado_extenso
     dictamen.Recomendaciones = ""
 
-    detalles.ValorNumerico = cantidad_final
+    detalles.ValorNumerico = 0
     detalles.FactorDeAutoEstima = resultado
 
     return (dictamen, detalles)
@@ -233,11 +239,11 @@ def set_HoneyAlonso(respuestas):
             estilo=estilo+" "+tipos[i]
             
 
-    dictamen.EvalNumerica = maximo
-    dictamen.EvalDescripctiva = estilo
+    dictamen.EvalNumerica = 0
+    dictamen.EvalDescripctiva = ""
     dictamen.Observaciones = resultado
     dictamen.Recomendaciones = ""
 
     detalles.Estilo = estilo
-    detalles.Resultado = maximo
+    detalles.Resultado = 0
     return (dictamen, detalles)
