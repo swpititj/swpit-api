@@ -12,7 +12,7 @@ class Config:
     JWT_COOKIE_CSRF_PROTECT=True
     JWT_CSRF_IN_COOKIES = False
     JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=100)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=500)
     JWT_COOKIE_SECURE = True
     JWT_COOKIE_SAMESITE = "None"
 
