@@ -6,9 +6,9 @@ from api.data.db import db
 class DetalleAutoEstima(db.Model):
     __tablename__ = 'detalleautoestima'
     idDetalleAutoEstima = Column(Integer, primary_key=True)
-    FactorDeAutoEstima = Column(String(15), unique=False, nullable=False)
-    ValorNumerico = Column(Integer, unique=False, nullable=False)
-    ObservacionesTutor = Column(String(300), unique=False, nullable=False)
+    FactorDeAutoEstima = Column(String(15), nullable=True)
+    ValorNumerico = Column(Integer, nullable=True)
+    ObservacionesTutor = Column(String(300), nullable=True)
 
     idDictamen = Column(Integer, ForeignKey('dictamenes.idDictamen'))
     idEncuesta =  Column(Integer, ForeignKey('encuestas.idEncuesta'))

@@ -5,10 +5,10 @@ from api.data.db import db
 class DetalleDicHE(db.Model):
     __tablename__ = 'detallediche'
     idDetalleDicHE = Column(Integer, primary_key=True)
-    HabitoEstudio = Column(String(30), unique=False, nullable=False)
-    CalifNumerica = Column(Integer, unique=False, nullable=False)
-    CalifDescriptiva = Column(String(25), unique=False, nullable=False)
-    ObservacionesTutor = Column(String(300), unique=False, nullable=False)
+    HabitoEstudio = Column(String(30), nullable=True)
+    CalifNumerica = Column(Integer, nullable=True)
+    CalifDescriptiva = Column(String(25), nullable=True)
+    ObservacionesTutor = Column(String(300), nullable=True)
 
     idDictamen = Column(Integer, ForeignKey('dictamenes.idDictamen'))
     idEncuesta =  Column(Integer, ForeignKey('encuestas.idEncuesta'))

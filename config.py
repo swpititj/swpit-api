@@ -7,7 +7,7 @@ class Config:
     TEMPLATES_FOLDER = 'templates'
     SQL_CLOUD_PASSWORD = os.environ.get('SQL_CLOUD_PASSWORD')
     SQL_LOCAL_PASSWORD = os.environ.get('SQL_LOCAL_PASSWORD')
-    JSON_SORT_KEYS=True 
+    JSON_SORT_KEYS=False 
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_COOKIE_CSRF_PROTECT=True
     JWT_CSRF_IN_COOKIES = False

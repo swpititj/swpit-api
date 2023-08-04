@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 class Tipos(db.Model):
     __tablename__ = 'tipos'
     idTipoPregunta = Column(Integer, primary_key=True)
-    Nombre = Column(String(50), unique=False, nullable=False)
-    Opcion = Column(Integer, unique=False, nullable= False)
+    Nombre = Column(String(50), nullable=True)
+    Opcion = Column(Integer, nullable= True)
     
     DetTipoPreg = relationship('DetTiposPreg')

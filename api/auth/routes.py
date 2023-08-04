@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, abort, jsonify, make_response, request
 from flask_jwt_extended import jwt_required, create_access_token, set_access_cookies, unset_jwt_cookies, current_user, get_csrf_token
 from api.auth.validation import password_validation
 from api.auth.jwt import jwt
@@ -32,13 +32,13 @@ def login():
     password = auth.get('password')
     typeUser = auth.get('typeuser')
 
-    if not username:
-        return jsonify('username is missing'), 400 
+    if not username or not password or not typeUser:
+        abort(400)
 
     response_data = password_validation(username, password, typeUser)
     
-    if response_data == None: return jsonify('Wrong username or password'),401
-   
+    if response_data == None: abort(401)
+       
     token = create_access_token(identity=response_data['idUser'], additional_claims=response_data)
     response_data['csrf'] = get_csrf_token(token)
     

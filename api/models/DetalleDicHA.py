@@ -5,9 +5,9 @@ from api.data.db import db
 class DetalleDicHA(db.Model):
     __tablename__ = 'detalledicha'
     idDetalleDicHA = Column(Integer, primary_key=True)
-    Estilo = Column(CHAR(11), unique=False, nullable=False)
-    Resultado = Column(Integer, unique=False, nullable=False)
-    ObservacionesTutor = Column(String(300), unique=False, nullable=False)
+    Estilo = Column(CHAR(11), nullable=True)
+    Resultado = Column(Integer, nullable=True)
+    ObservacionesTutor = Column(String(300), nullable=True)
 
     idDictamen = Column(Integer, ForeignKey('dictamenes.idDictamen'))
     idEncuesta =  Column(Integer, ForeignKey('encuestas.idEncuesta'))

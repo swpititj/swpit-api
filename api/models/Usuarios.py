@@ -4,8 +4,8 @@ from api.data.db import db
 class Usuarios(db.Model):
     __tablename__ = 'usuarios'
     idusuario = Column(Integer, primary_key=True)
-    Nombre = Column(String(50), unique=True, nullable=False)
-    Correo = Column(String(200), unique=True, nullable=False)
+    Nombre = Column(String(50), unique=True, nullable=True)
+    Correo = Column(String(200), unique=True, nullable=True)
     Clave = Column(String(200))
     Activo = Column(Integer, default=1)
 

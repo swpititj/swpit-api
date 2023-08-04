@@ -4,9 +4,9 @@ from api.data.db import db
 class UsuEstudiantes(db.Model):
     __tablename__ = 'usuestudiantes'
     idUsuEstudiante = Column(Integer, primary_key=True)
-    FechaIngreso= Column(Date, unique=True, nullable=False)
-    FechaTermino= Column(Date, unique=True, nullable=True)
-    Activo = Column(Integer, default=1)
+    FechaIngreso= Column(Date)
+    FechaTermino= Column(Date)
+    Activo = Column(Integer)
 
     idEstudiante = Column(Integer, ForeignKey('estudiantes.idEstudiante'))
     idUsuario = Column(Integer, ForeignKey('usuarios.idusuario'))

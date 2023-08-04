@@ -4,9 +4,9 @@ from api.data.db import db
 class UsuPadres(db.Model):
     __tablename__ = 'usupadres'
     idUsuPadres = Column(Integer, primary_key=True)
-    FechaIngreso = Column(Date, unique=False, nullable=False)
-    FechaTermino = Column(Date, unique=False, nullable=False)
-    Activo = Column(Integer, default=1)
+    FechaIngreso = Column(Date)
+    FechaTermino = Column(Date)
+    Activo = Column(Integer)
 
     idUsuario = Column(Integer, ForeignKey('usuarios.idusuario'))
     idPadreFamilia = Column(Integer, ForeignKey('padresFamilia.idPadreFamilia'))

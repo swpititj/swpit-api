@@ -11,6 +11,8 @@ from api.models.Estudiantes import Estudiantes
 from api.models.AplicPorEst import AplicPorEst
 from api.models.Aplicaciones import Aplicaciones
 from api.models.Dictamenes import Dictamenes
+from api.models.Salones import Salones
+from api.models.Carreras import Carreras
 
 from api.models.DetalleAutoEstima import DetalleAutoEstima
 from api.models.DetalleAsertividad import DetalleAsertividad
@@ -118,6 +120,16 @@ class AplicPorEstSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = AplicPorEst
     Dictamen = fields.Nested(DictamenesSchema, many=True)
+
+class CarrerasSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Carreras
+
+class SalonesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Salones
+    Carrera = fields.Nested(CarrerasSchema)
+    Estudiantes = fields.Nested(EstudiantesSchema, many=True)
         
 '''
 class EncuestasSchema(ma.SQLAlchemyAutoSchema):
