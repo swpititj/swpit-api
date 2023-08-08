@@ -14,7 +14,7 @@ from api.auth.jwt import jwt
 app = Flask(__name__)
 #CORS
 #CORS(app,supports_credentials=True, send_wildcard=True, origins="*")
-CORS(app, send_wildcard=True, origins="localhost:8080")
+CORS(app, send_wildcard=True, supports_credentials=True, origins="localhost:8080")
 #CORS(app)
 
 #Configuration
