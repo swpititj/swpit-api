@@ -10,7 +10,7 @@ class Config:
     JSON_SORT_KEYS=False 
     JWT_TOKEN_LOCATION = ["cookies"]
     #JWT_COOKIE_DOMAIN = ".example.com"
-    JWT_COOKIE_DOMAIN = "swpit-f7az4aatqq-uc.a.run.app"
+    JWT_COOKIE_DOMAIN = ".swpit-f7az4aatqq-uc.a.run.app"
     JWT_COOKIE_CSRF_PROTECT=True
     JWT_CSRF_IN_COOKIES = False
     JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
