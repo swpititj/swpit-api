@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, jsonify, make_response, request
-from flask_jwt_extended import jwt_required, create_access_token, set_access_cookies, unset_jwt_cookies, current_user, get_csrf_token
+from flask_jwt_extended import jwt_required, create_access_token, current_user, get_jwt_identity
 from api.auth.validation import password_validation
 from api.auth.jwt import jwt
 from api.data.db import db
@@ -21,7 +21,6 @@ def user_lookup_callback(_jwt_header, jwt_data):
                 'username': jwt_data['username'],
                 'idUserType': jwt_data['idUserType'],
                 'name': jwt_data['name'],
-                #'csrf': jwt_data['csrf']
              }
     return user
 
@@ -40,28 +39,25 @@ def login():
     if response_data == None: abort(401)
        
     token = create_access_token(identity=response_data['idUser'], additional_claims=response_data)
-    #response_data['csrf'] = get_csrf_token(token)
-    
-    response = jsonify(response_data)
-    set_access_cookies(response, token)
-    return response
+    response_data['token'] = token
+
+    return make_response(jsonify(response_data), 200)
 
 @auth_bp.post('/logout')
 def logout():
     response = jsonify("logout successful")
-    unset_jwt_cookies(response)
     return response
 
 @auth_bp.get('/check')
 @jwt_required()
 def check():
     user = {
-        "csrf": current_user['csrf'],
         "userType": current_user['userType'],
         "idUser": current_user['idUser'],
         "username": current_user['username'],
         "idUserType": current_user['idUserType'],
-        "name": current_user['name']
+        "name": current_user['name'],
+        'token': request.headers.get('Authorization').split()[1]
     }
     return make_response(jsonify(user), 200)
 

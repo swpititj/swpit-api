@@ -8,14 +8,11 @@ class Config:
     SQL_CLOUD_PASSWORD = os.environ.get('SQL_CLOUD_PASSWORD')
     SQL_LOCAL_PASSWORD = os.environ.get('SQL_LOCAL_PASSWORD')
     JSON_SORT_KEYS=False 
-    JWT_TOKEN_LOCATION = ["cookies"]
-    #JWT_COOKIE_DOMAIN = ".swpit-f7az4aatqq-uc.a.run.app"
-    JWT_COOKIE_CSRF_PROTECT=False
-    #JWT_CSRF_IN_COOKIES = False
-    #JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=500)
+
     JWT_COOKIE_SECURE = True
     JWT_COOKIE_SAMESITE = "None"
+    JWT_TOKEN_LOCATION = ["headers"]
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=500)
 
 class ProdConfig(Config):
     FLASK_ENV = 'production'
