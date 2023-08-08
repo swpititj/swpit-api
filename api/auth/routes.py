@@ -21,7 +21,7 @@ def user_lookup_callback(_jwt_header, jwt_data):
                 'username': jwt_data['username'],
                 'idUserType': jwt_data['idUserType'],
                 'name': jwt_data['name'],
-                'csrf': jwt_data['csrf']
+                #'csrf': jwt_data['csrf']
              }
     return user
 
@@ -40,7 +40,7 @@ def login():
     if response_data == None: abort(401)
        
     token = create_access_token(identity=response_data['idUser'], additional_claims=response_data)
-    response_data['csrf'] = get_csrf_token(token)
+    #response_data['csrf'] = get_csrf_token(token)
     
     response = jsonify(response_data)
     set_access_cookies(response, token)
