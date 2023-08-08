@@ -16,7 +16,7 @@ class Config:
     JWT_ACCESS_CSRF_HEADER_NAME = "XCSRFTOKEN"
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=500)
     JWT_COOKIE_SECURE = True
-    JWT_COOKIE_SAMESITE = "None"
+    JWT_COOKIE_SAMESITE = "Lax"
 
 class ProdConfig(Config):
     FLASK_ENV = 'production'
