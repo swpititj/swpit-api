@@ -13,7 +13,7 @@ from api.auth.jwt import jwt
 
 app = Flask(__name__)
 #CORS
-CORS(app,supports_credentials=True)
+CORS(app,supports_credentials=True, send_wildcard=True, origins='*')
 #CORS(app)
 
 #Configuration
