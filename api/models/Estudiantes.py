@@ -12,6 +12,6 @@ class Estudiantes(db.Model):
     Nacimiento= Column(Date)
     RFC= Column(String(13))
     ESC= Column(Integer)
-    
     idSalon = Column(Integer, ForeignKey('salones.idSalon'))
+    
     Salon = db.relationship("Salones", back_populates="Estudiantes")

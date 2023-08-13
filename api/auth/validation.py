@@ -10,11 +10,20 @@ from api.models.Puestos import Puestos
 def password_validation(username, password, userType):
     try:
         user = Usuarios.query.filter_by(Nombre=username).one_or_none()
-        user = Usuarios.query.filter_by(Nombre=username).one_or_none()
         
         if user == None:
             return None
         if bcrypt.checkpw(password.encode('utf-8'), user.Clave.encode('utf-8')):
+            
+            if username == 'root':
+                return { 
+                    'userType': 'root',
+                    'idUser': user.idusuario,
+                    'username': "root",
+                    'idUserType': 0,
+                    'mail': user.Correo,
+                    'name': 'root'
+                }
             
             if userType == 'alumno':
                 userStudent = UsuEstudiantes.query.filter_by(idUsuario=user.idusuario).one_or_none()
@@ -24,6 +33,7 @@ def password_validation(username, password, userType):
                     'idUser': user.idusuario,
                     'username': user.Nombre,
                     'idUserType': student.idEstudiante,
+                    'mail': user.Correo,
                     'name': student.Nombre
                 }
         
@@ -38,10 +48,10 @@ def password_validation(username, password, userType):
                     'idUser': user.idusuario,
                     'username': user.Nombre,
                     'idUserType': staff.idPersonal,
+                    'mail': user.Correo,
                     'name': staff.Nombre
                 }
         else:
             return None
     except Exception as e:
-        print(e)
         return None

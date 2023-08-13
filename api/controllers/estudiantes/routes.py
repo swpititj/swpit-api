@@ -1,12 +1,10 @@
 import json
-from flask import Blueprint, render_template, request, redirect, make_response,jsonify, abort
-from api.data.db import db,session, select
-from flask_jwt_extended import jwt_required, get_current_user,current_user
+from flask import Blueprint, request,jsonify, abort
+from api.data.db import db
+from flask_jwt_extended import jwt_required,current_user
 from api.schemas.Schemas import EstudiantesSchema
 from api.models.Estudiantes import Estudiantes
 from api.models.Salones import Salones
-from api.models.Carreras import Carreras
-from api.controllers.encuestas.utils.evaluations import evaluate_survey
 
 estudiantes_bp = Blueprint('estudiantes_bp', __name__)
 
@@ -16,7 +14,7 @@ def get_estudiantes():
     id_professor = int(current_user['idUserType'])
     user_type = current_user['userType']
 
-    if(user_type!="docente"): abort(401)
+    if(user_type!="docente"): abort(400)
 
     estudiantes_schema = EstudiantesSchema(many=True)
     res = []
@@ -24,6 +22,17 @@ def get_estudiantes():
     students = db.session.execute(sql).scalars()
     res = estudiantes_schema.dump(students)
     return jsonify(res)
+
+@estudiantes_bp.put('/')
+@jwt_required()
+def put_estudiantes():
+    data = json.loads(request.data)
+    schema = EstudiantesSchema()
+    student = schema.load(data)
+    db.session.merge(student)
+    db.session.commit()
+    return jsonify(data)
+
 
 @estudiantes_bp.get('/<id_student>')
 @jwt_required()

@@ -1,11 +1,7 @@
 from flask import Blueprint, abort, jsonify, make_response, request
-from flask_jwt_extended import jwt_required, create_access_token, current_user, get_jwt_identity
+from flask_jwt_extended import jwt_required, create_access_token, current_user
 from api.auth.validation import password_validation
 from api.auth.jwt import jwt
-from api.data.db import db
-from api.models.Usuarios import Usuarios
-from api.models.UsuEstudiantes import UsuEstudiantes
-from api.models.Estudiantes import Estudiantes
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -20,6 +16,7 @@ def user_lookup_callback(_jwt_header, jwt_data):
                 'idUser': jwt_data['idUser'],
                 'username': jwt_data['username'],
                 'idUserType': jwt_data['idUserType'],
+                'mail': jwt_data['mail'],
                 'name': jwt_data['name'],
              }
     return user
@@ -32,11 +29,14 @@ def login():
     typeUser = auth.get('typeuser')
 
     if not username or not password or not typeUser:
-        abort(400)
+        response = jsonify({'message': 'Datos incorrectos'})
+        return response, 400
 
     response_data = password_validation(username, password, typeUser)
     
-    if response_data == None: abort(401)
+    if response_data == None:
+        response = jsonify({'message':'Contraseña o Usuario es incorrecto'})
+        return response, 401
        
     token = create_access_token(identity=response_data['idUser'], additional_claims=response_data)
     response_data['token'] = token
@@ -57,6 +57,7 @@ def check():
         "username": current_user['username'],
         "idUserType": current_user['idUserType'],
         "name": current_user['name'],
+        "mail": current_user['mail'],
         'token': request.headers.get('Authorization').split()[1]
     }
     return make_response(jsonify(user), 200)

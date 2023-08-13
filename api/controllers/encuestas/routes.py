@@ -1,13 +1,13 @@
-import json
 from flask import Blueprint,jsonify
 from api.data.db import db
 from api.models.Encuestas import Encuestas
 from api.schemas.Schemas import EncuestasSchema, EncuestasCortasSchema
+from flask_jwt_extended import jwt_required
 
 encuesta_bp = Blueprint('encuesta_bp', __name__)
 
 @encuesta_bp.get('/<id_survey>')
-#@jwt_required()
+@jwt_required()
 def get_encuesta(id_survey):
     id_survey = int(id_survey)
     encuesta_schemas = EncuestasSchema()
@@ -19,7 +19,7 @@ def get_encuesta(id_survey):
     return jsonify(survey)
 
 @encuesta_bp.get('/')
-#@jwt_required()
+@jwt_required()
 def get_encuestas():
     encuestas_schema = EncuestasCortasSchema(many=True)
     sql = db.select(Encuestas)

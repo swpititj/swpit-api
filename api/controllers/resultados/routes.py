@@ -1,5 +1,6 @@
 import json
-from flask import Blueprint, request, jsonify, sessions
+from flask import Blueprint, request, jsonify
+from sqlalchemy import desc
 from api.data.db import db
 from api.models.Dictamenes import Dictamenes
 from api.models.AplicPorEst import AplicPorEst
@@ -10,7 +11,6 @@ from api.models.DetalleDicHA import DetalleDicHA
 from api.models.DetalleDicHE import DetalleDicHE
 from flask_jwt_extended import jwt_required,current_user
 from api.schemas.Schemas import AplicPorEstSchema
-from sqlalchemy import select
 from api.controllers.encuestas.utils.evaluations import evaluate_survey
 
 resultados_bp = Blueprint('resultados_bp', __name__)
@@ -49,7 +49,8 @@ def resultadosta_get(id_survey):
         .where(AplicPorEst.idEstudiante==id_student)\
         .join(Dictamenes)\
         .join(detalle)\
-        .where(detalle.idEncuesta==id_survey)
+        .where(detalle.idEncuesta==id_survey)\
+        .order_by(desc(AplicPorEst.idAplicPorEst))
 
     res_aplicporest = db.first_or_404(sql)
     

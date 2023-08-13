@@ -5,12 +5,13 @@ from api.models.Seccion import Seccion
 from api.models.Tipos import Tipos
 from api.schemas.ma import ma
 from api.models.Usuarios import Usuarios
-from marshmallow import fields
+from marshmallow import fields, post_load
 from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.Estudiantes import Estudiantes
 from api.models.AplicPorEst import AplicPorEst
 from api.models.Aplicaciones import Aplicaciones
 from api.models.Dictamenes import Dictamenes
+from api.models.Personal import Personal
 from api.models.Salones import Salones
 from api.models.Carreras import Carreras
 
@@ -43,7 +44,19 @@ class UsuEstudiantesSchema(ma.SQLAlchemyAutoSchema):
 
 class EstudiantesSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Estudiantes 
+        model = Estudiantes
+        include_fk = True
+    @post_load
+    def make_user(self, data, **kwargs):
+        return Estudiantes(**data)
+
+class PersonalSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Personal
+        include_fk = True
+    @post_load
+    def make_user(self, data, **kwargs):
+        return Personal(**data)
 
 class DetTiposPregSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

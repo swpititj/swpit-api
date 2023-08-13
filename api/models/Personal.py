@@ -4,7 +4,7 @@ from api.data.db import db
 class Personal(db.Model):
     __tablename__ = 'personal'
     idPersonal = Column(Integer, primary_key=True)
-    NT = Column(Integer)
+    NT = Column(String(45))
     Apellidos = Column(String(100))
     Nombre = Column(String(100))
     RFC = Column(CHAR(13))
