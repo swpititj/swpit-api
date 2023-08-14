@@ -1,17 +1,9 @@
 import datetime
-import json
 from api.models.RespuestasEva import RespuestaEva
-from api.models.Aplicaciones import Aplicaciones
 from api.models.AplicPorEst import AplicPorEst
 from api.models.Dictamenes import Dictamenes
-from api.models.DetalleAsertividad import DetalleAsertividad
-from api.models.DetalleDictInvApre import DetalleDictInvApre
-from api.models.DetalleAutoEstima import DetalleAutoEstima
-from api.models.DetalleDicHA import DetalleDicHA
-from api.models.DetalleDicHE import DetalleDicHE
 from api.models.RespuestasEva import RespuestaEva
-from api.schemas.Schemas import AplicPorEstSchema
-from api.controllers.encuestas.utils.setters import set_HabilidadesEstudio, set_CanalesAprendizaje, set_TestAsertividad, set_autoestima,set_HoneyAlonso
+from api.controllers.resultados.utils.setters import set_HabilidadesEstudio, set_CanalesAprendizaje, set_TestAsertividad, set_autoestima,set_HoneyAlonso
 from api.data.db import db
 
 def evaluate_survey(survey_data, user_data, survey_id): 

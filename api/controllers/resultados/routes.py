@@ -11,7 +11,7 @@ from api.models.DetalleDicHA import DetalleDicHA
 from api.models.DetalleDicHE import DetalleDicHE
 from flask_jwt_extended import jwt_required,current_user
 from api.schemas.Schemas import AplicPorEstSchema
-from api.controllers.encuestas.utils.evaluations import evaluate_survey
+from api.controllers.resultados.utils.evaluations import evaluate_survey
 
 resultados_bp = Blueprint('resultados_bp', __name__)
 

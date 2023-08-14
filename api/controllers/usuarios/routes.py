@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from api.models.Usuarios import Usuarios
 import bcrypt
 
+
 usuarios_bp = Blueprint('usuarios_bp', __name__)
 
 @usuarios_bp.put('/')
