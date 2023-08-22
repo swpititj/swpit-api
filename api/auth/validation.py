@@ -4,6 +4,7 @@ from api.models.Estudiantes import Estudiantes
 from api.models.Personal import Personal
 from api.models.UsuEstudiantes import UsuEstudiantes
 from api.models.UsuarioPersonal import UsuarioPersonal
+from api.models.Salones import Salones
 from api.models.CargosPersonal import CargosPersonal
 from api.models.Puestos import Puestos
 
@@ -28,13 +29,16 @@ def password_validation(username, password, userType):
             if userType == 'alumno':
                 userStudent = UsuEstudiantes.query.filter_by(idUsuario=user.idusuario).one_or_none()
                 student = Estudiantes.query.filter_by(idEstudiante=userStudent.idEstudiante).one_or_none()
+                group =  Salones.query.filter_by(idSalon=student.idSalon).one_or_none()
                 return { 
                     'userType': userType,
                     'idUser': user.idusuario,
                     'username': user.Nombre,
                     'idUserType': student.idEstudiante,
                     'mail': user.Correo,
-                    'name': student.Nombre
+                    'name': student.Nombre,
+                    'career': group.Carrera.nombre,
+                    'generation': group.generacion
                 }
         
             if userType == 'personal':

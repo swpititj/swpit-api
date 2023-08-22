@@ -16,9 +16,14 @@ def user_lookup_callback(_jwt_header, jwt_data):
                 'idUser': jwt_data['idUser'],
                 'username': jwt_data['username'],
                 'idUserType': jwt_data['idUserType'],
+                'generation': 0,
+                'career': '',
                 'mail': jwt_data['mail'],
-                'name': jwt_data['name'],
+                'name': jwt_data['name']
              }
+    if jwt_data['userType'] == 'alumno':
+        user['generation']= jwt_data['generation']
+        user['career']= jwt_data['career']
     return user
 
 @auth_bp.post('/login')
@@ -56,8 +61,10 @@ def check():
         "idUser": current_user['idUser'],
         "username": current_user['username'],
         "idUserType": current_user['idUserType'],
-        "name": current_user['name'],
         "mail": current_user['mail'],
+        "name": current_user['name'],
+        "career": current_user['career'],
+        "generation": current_user['generation'],
         'token': request.headers.get('Authorization').split()[1]
     }
     return make_response(jsonify(user), 200)

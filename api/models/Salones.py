@@ -14,4 +14,4 @@ class Salones(db.Model):
 
     idPersonal = Column(Integer, ForeignKey('personal.idPersonal'))
 
-    Estudiantes = db.relationship("Estudiantes", back_populates="Salon")
+    Estudiantes = db.relationship("Estudiantes")
